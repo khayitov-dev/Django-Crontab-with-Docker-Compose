@@ -1,0 +1,35 @@
+version: '3'
+
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
+
+services:
+  django: &django
+    build:
+      context: .
+      dockerfile: ./compose/local/Dockerfile
+    image: mycrondjango
+    container_name: django
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app:cached
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    ports:
+      - "8000:8000"
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/postgres/Dockerfile
+    image: mycron_postgres
+    container_name: postgres
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data:cached
+      - local_postgres_data_backups:/backups:cached
+    env_file:
+      - ./.envs/.local/.postgres

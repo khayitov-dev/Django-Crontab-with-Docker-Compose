@@ -1,0 +1,3 @@
+PROJECT_NAME=mycron
+SECRET_KEY=django-insecure-o9@c1p$_vf2n+_8jzeog9+yyusm=2yqmtvzr#820db*=i5=1hi
+DEBUG=True
